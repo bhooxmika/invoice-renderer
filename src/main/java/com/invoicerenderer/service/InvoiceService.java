@@ -28,6 +28,7 @@ public class InvoiceService {
     }
 
     public Invoice createAndRenderInvoice(Invoice invoice) {
+        long startTime = System.currentTimeMillis();
         invoice.setRendered(false);
         invoiceRepository.save(invoice);
 
@@ -45,7 +46,13 @@ public class InvoiceService {
         }
 
         invoice.setRendered(true);
-        return invoiceRepository.save(invoice);
+        Invoice savedInvoice = invoiceRepository.save(invoice);
+
+        long endTime = System.currentTimeMillis();
+        long latency = endTime - startTime;
+        System.out.println("Invoice generated for " + invoice.getTransactionId() + " in " + latency + " ms");
+
+        return savedInvoice;
     }
 
     public Optional<Invoice> getInvoice(Long id) {
