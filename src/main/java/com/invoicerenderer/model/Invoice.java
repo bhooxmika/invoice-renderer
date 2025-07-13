@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Transient;
 
 import lombok.Data;
 
@@ -34,4 +35,7 @@ public class Invoice {
     private String currency;
     private String createdAt;
     private String logoUrl;
+
+    @Transient
+    private String pdfUrl;
 }

@@ -7,6 +7,7 @@ import com.invoicerenderer.util.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,16 +47,23 @@ public class InvoiceService {
         }
 
         invoice.setRendered(true);
-        Invoice savedInvoice = invoiceRepository.save(invoice);
+        String pdfUrl = "invoices/pdf/" + invoice.getTransactionId();
+        invoice.setPdfUrl(pdfUrl);
+        invoiceRepository.save(invoice);
 
         long endTime = System.currentTimeMillis();
         long latency = endTime - startTime;
         System.out.println("Invoice generated for " + invoice.getTransactionId() + " in " + latency + " ms");
 
-        return savedInvoice;
+        return invoice;
     }
 
     public Optional<Invoice> getInvoice(Long id) {
         return invoiceRepository.findById(id);
+    }
+
+    public byte[] getInvoicePdf(String transactionId) throws IOException {
+        Path pdfPath = Paths.get("output", "invoice-" + transactionId + ".pdf");
+        return Files.readAllBytes(pdfPath);
     }
 }
