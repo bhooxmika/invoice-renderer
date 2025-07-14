@@ -16,6 +16,24 @@ import java.io.IOException;
 public class InvoiceController {
     @Autowired private InvoiceService service;
 
+    @GetMapping("/")
+    public String home() {
+        return """
+                ✅ Invoice Renderer is running!
+
+                Available Endpoints:
+                [POST] /invoices
+                    → Create and render a new invoice
+
+                [GET] /invoices/{id}
+                    → Get invoice JSON by ID
+
+                [GET] /invoices/pdf/{transactionId}
+                    → Download PDF (inline) by transaction ID
+                   Add ?mode=attachment for force download
+                """;
+    }
+
     @PostMapping
     public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice) {
         return ResponseEntity.ok(service.createAndRenderInvoice(invoice));
