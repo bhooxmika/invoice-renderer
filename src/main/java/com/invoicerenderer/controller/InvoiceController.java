@@ -17,21 +17,20 @@ public class InvoiceController {
     @Autowired private InvoiceService service;
 
     @GetMapping("/")
-    public String home() {
-        return """
-                ✅ Invoice Renderer is running!
+    public ResponseEntity<String> home() {
+        String response = """
+        ✅ Invoice Renderer is running!
 
-                Available Endpoints:
-                [POST] /invoices
-                    → Create and render a new invoice
+        Available Endpoints:
+        [POST] /invoices → Create and render a new invoice
+        [GET] /invoices/{id} → Get invoice JSON by ID
+        [GET] /invoices/pdf/{transactionId} → Download PDF (inline)
+        Add ?mode=attachment for force download
+        """;
 
-                [GET] /invoices/{id}
-                    → Get invoice JSON by ID
-
-                [GET] /invoices/pdf/{transactionId}
-                    → Download PDF (inline) by transaction ID
-                   Add ?mode=attachment for force download
-                """;
+        return ResponseEntity.ok()
+                .header("Content-Type", "text/plain; charset=UTF-8")
+                .body(response);
     }
 
     @PostMapping

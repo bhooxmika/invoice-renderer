@@ -11,8 +11,11 @@
 - 🧩 Custom fields – Auto-generate values like order number, date-time, and tax
 - 🖼️ Embedded logo/image support (local file path)
 - 📤 API-driven (REST endpoint to trigger invoice rendering)
-- - ⚡ Average PDF generation latency: **<100ms** (Docker container test)
+- ⚡ Average PDF generation latency: **<100ms** (Docker container test)
 - 💡 Designed with clean separation of concerns for production readiness
+- 📄 **Deployed API available** – Test the live instance at: [https://invoice-renderer.onrender.com](https://invoice-renderer.onrender.com) 
+- 📎 Supports **inline view and forced PDF download** using `?mode=inline` or `?mode=attachment`
+
 
 ---
 
@@ -55,6 +58,21 @@ curl -X POST http://localhost:8080/invoices -H "Content-Type: application/json"
 ```
 
 🧾 PDF gets saved in the `/output` folder.
+
+---
+
+## 🌐 Live API Demo 
+You can test the deployed version here:
+
+- 🔗 **Base URL**: [https://invoice-renderer.onrender.com](https://invoice-renderer.onrender.com)
+
+### ✅ Available Endpoints:
+
+- `GET /` → Returns a welcome message and lists available endpoints
+- `POST /invoices` → Create and render invoice, returns JSON with `pdfUrl`
+- `GET /invoices/{id}` → Fetch saved invoice metadata by ID
+- `GET /invoices/pdf/{transactionId}` → View/download the rendered PDF  
+  ⤷ Add `?mode=attachment` to trigger download instead of inline view
 
 ---
 
